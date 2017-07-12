@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.6</TargetFramework>
+  </PropertyGroup>
+
+  <Choose>
+    <When Condition=" '$(SolutionName)' == 'jsreport.development' ">
+      <ItemGroup>
+        <ProjectReference Include="..\..\jsreport-dotnet-types\jsreport.Types\jsreport.Types.csproj" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <PackageReference Include="jsreport.Types" Version="1.0.0" />       
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
+  </ItemGroup>
+
+</Project>

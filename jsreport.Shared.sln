@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26621.2
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "jsreport.Shared", "jsreport.Shared\jsreport.Shared.csproj", "{BAB93602-4A80-4E2E-B1AB-6560ECB14E68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jsreport.Shared.Test", "jsreport.Shared.Test\jsreport.Shared.Test.csproj", "{AADD316A-5693-4081-8FEB-92DD27F58BF5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BAB93602-4A80-4E2E-B1AB-6560ECB14E68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAB93602-4A80-4E2E-B1AB-6560ECB14E68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAB93602-4A80-4E2E-B1AB-6560ECB14E68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAB93602-4A80-4E2E-B1AB-6560ECB14E68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AADD316A-5693-4081-8FEB-92DD27F58BF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AADD316A-5693-4081-8FEB-92DD27F58BF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AADD316A-5693-4081-8FEB-92DD27F58BF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AADD316A-5693-4081-8FEB-92DD27F58BF5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AAF3693B-2FC6-4CC3-A2F4-3F113C3CDAB5}
+	EndGlobalSection
+EndGlobal
