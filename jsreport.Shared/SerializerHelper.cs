@@ -208,20 +208,5 @@ namespace jsreport.Shared
                 }
             }    
         }
-    }
-
-    public class JsReportContractResolver : CamelCasePropertyNamesContractResolver
-    {
-        protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
-        {            
-            var res = base.CreateProperty(member, memberSerialization);
-
-            if (member.Name == "Custom")
-            {                
-                res.PropertyName = "template";
-            }
-
-            return res;
-        }
-    }
+    }  
 }
