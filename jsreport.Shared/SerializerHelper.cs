@@ -1,15 +1,12 @@
 ﻿using jsreport.Types;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.Serialization;
-using System.Text;
 using System.Linq;
-using System.IO;
 using System.Text.RegularExpressions;
 
 namespace jsreport.Shared
@@ -175,7 +172,7 @@ namespace jsreport.Shared
                 {
                     Name = templateName
                 },
-                Data = string.IsNullOrEmpty(jsonData) ? (object)null : JObject.Parse(jsonData)
+                Data = string.IsNullOrEmpty(jsonData) ? (object)null : JObject.Parse(jsonData),                  
             });          
         }
 
