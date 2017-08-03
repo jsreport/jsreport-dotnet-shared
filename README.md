@@ -1,4 +1,4 @@
-# jsreport-dotnet-shared
+# jsreport.Shared
 [![Build status](https://ci.appveyor.com/api/projects/status/nl2evif6uho2y7ha?svg=true)](https://ci.appveyor.com/project/pofider/jsreport-dotnet-shared)
 [![NuGet](https://img.shields.io/nuget/v/jsreport.Shared.svg)](https://nuget.org/packages/jsreport.Shared)
 
