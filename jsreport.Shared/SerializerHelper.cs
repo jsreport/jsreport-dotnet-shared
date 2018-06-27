@@ -201,7 +201,7 @@ namespace jsreport.Shared
                 else
                 {
                     var key = property.GetCustomAttribute<DataMemberAttribute>().Name;
-                    config[key] = value.ToString();
+                    config[key] = value.GetType() == typeof (bool) ? value.ToString().ToLower() : value.ToString();
                 }
             }    
         }
