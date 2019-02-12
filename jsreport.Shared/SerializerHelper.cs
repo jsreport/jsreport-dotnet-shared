@@ -30,7 +30,7 @@ namespace jsreport.Shared
 
             return new ReportMeta
             {
-                ReportPernamentLink = meta.MetaValue("permanentLink"),
+                ReportPermanentLink = meta.MetaValue("permanentLink"),
                 AsyncReportLocation = meta.MetaValue("location"),
                 ContentType = meta.MetaValue("contentType"),
                 ReportId = meta.MetaValue("reportId"),
