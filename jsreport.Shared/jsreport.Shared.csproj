@@ -1,14 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.6;net45</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.0.1</Version>
+    <Version>2.1.0</Version>
     <Authors>Jan Blaha</Authors>
     <Company>jsreport</Company>
     <Product>jsreport</Product>
     <Description>(Internal) Shared helpers for jsreport c# sdk</Description>
-    <Copyright>Copyright 2013-2017 Jan Blaha</Copyright>
+    <Copyright>Copyright 2013-2019 Jan Blaha</Copyright>
     <PackageLicenseUrl>http://www.opensource.org/licenses/mit-license.php</PackageLicenseUrl>
     <PackageProjectUrl>https://jsreport.net</PackageProjectUrl>
     <PackageIconUrl>http://jsreport.net/img/favicon.ico</PackageIconUrl>
@@ -17,8 +17,8 @@
     <PackageTags>jsreport</PackageTags>
     <PackageReleaseNotes>Release notes are at https://github.com/jsreport/jsreport-dotnet-shared/releases</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <AssemblyVersion>2.0.1.0</AssemblyVersion>
-    <FileVersion>2.0.1.0</FileVersion>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
+    <FileVersion>2.1.0.0</FileVersion>
   </PropertyGroup>
 
   <Choose>
@@ -29,13 +29,14 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <PackageReference Include="jsreport.Types" Version="2.2.7" />       
+        <PackageReference Include="jsreport.Types" Version="2.6.1" />       
       </ItemGroup>
     </Otherwise>
   </Choose>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="System.IO.Compression" Version="4.3.0" />
   </ItemGroup>
 
 </Project>

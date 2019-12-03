@@ -8,6 +8,6 @@ namespace jsreport.Shared
     public interface IReportingBinary
     {
         Stream ReadContent();
-        string UniqueId { get; }        
+        string UniqueId { get; }    
     }
 }
