@@ -3,12 +3,12 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.1.0</Version>
+    <Version>2.2.0</Version>
     <Authors>Jan Blaha</Authors>
     <Company>jsreport</Company>
     <Product>jsreport</Product>
     <Description>(Internal) Shared helpers for jsreport c# sdk</Description>
-    <Copyright>Copyright 2013-2019 Jan Blaha</Copyright>
+    <Copyright>Copyright 2013-2020 Jan Blaha</Copyright>
     <PackageLicenseUrl>http://www.opensource.org/licenses/mit-license.php</PackageLicenseUrl>
     <PackageProjectUrl>https://jsreport.net</PackageProjectUrl>
     <PackageIconUrl>http://jsreport.net/img/favicon.ico</PackageIconUrl>
@@ -17,8 +17,8 @@
     <PackageTags>jsreport</PackageTags>
     <PackageReleaseNotes>Release notes are at https://github.com/jsreport/jsreport-dotnet-shared/releases</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <AssemblyVersion>2.1.0.0</AssemblyVersion>
-    <FileVersion>2.1.0.0</FileVersion>
+    <AssemblyVersion>2.2.0.0</AssemblyVersion>
+    <FileVersion>2.2.0.0</FileVersion>
   </PropertyGroup>
 
   <Choose>
