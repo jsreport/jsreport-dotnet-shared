@@ -8,6 +8,8 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Dynamic;
+using System.ComponentModel;
 
 namespace jsreport.Shared
 {    
@@ -82,6 +84,10 @@ namespace jsreport.Shared
 
         public static string SerializeRenderRequest(RenderRequest rr)
         {
+            // a hack to avoid camel casing the data prop values
+            var data = rr.Data;
+            rr.Data = null;
+
             var js = new JsonSerializer()
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
@@ -91,6 +97,12 @@ namespace jsreport.Shared
             };
 
             var jo = JObject.FromObject(rr, js);
+            
+            if (data != null)
+            {
+                js.ContractResolver = new DefaultContractResolver();
+                jo["data"] = JObject.FromObject(data, js);
+            }
             
             jo["overwrites"]?["template"]?.Values().ToList()
                 .ForEach((val => jo["template"][val.Path.Replace("overwrites.template.", "")] = val));
@@ -105,7 +117,27 @@ namespace jsreport.Shared
 
         public static string SerializeRenderRequest(object r)
         {
-            var js = new JsonSerializerSettings()
+            // a hack to avoid camel casing the data prop values
+            IDictionary<string, object> expando = new ExpandoObject();
+            foreach (PropertyDescriptor property in TypeDescriptor.GetProperties(r.GetType()))
+            {
+                expando.Add(property.Name, property.GetValue(r));
+            }
+
+            object data = null;
+            if (expando.ContainsKey("Data"))
+            {
+                data = expando["Data"];
+                expando["Data"] = null;
+            }
+
+            if (expando.ContainsKey("data"))
+            {
+                data = expando["data"];
+                expando["data"] = null;
+            }
+
+            var js = new JsonSerializer()
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
                 NullValueHandling = NullValueHandling.Ignore,
@@ -113,7 +145,15 @@ namespace jsreport.Shared
                 PreserveReferencesHandling = PreserveReferencesHandling.Objects
             };
 
-            return JsonConvert.SerializeObject(r, js);
+            var jo = JObject.FromObject(expando as ExpandoObject,js);
+
+            js.ContractResolver = new DefaultContractResolver();
+            if (data != null)
+            {
+                jo["data"] = JObject.FromObject(data, js);
+            }
+
+            return jo.ToString();
         }
 
         public static string SerializeRenderRequest(string templateShortid, object data)
@@ -205,5 +245,5 @@ namespace jsreport.Shared
                 }
             }    
         }
-    }  
+    }      
 }

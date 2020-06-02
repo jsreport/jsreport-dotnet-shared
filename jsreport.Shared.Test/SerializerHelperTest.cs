@@ -1,3 +1,4 @@
+using jsreport.Types;
 using NUnit.Framework;
 using Shouldly;
 using System.Collections.Generic;
@@ -28,5 +29,74 @@ namespace jsreport.Shared.Test
 
             report.ContentType.ShouldBe("text/html");            
         }
+
+        [Test]
+        public void TestShouldntChangeDataPropsCasing()
+        {
+            var serialized = SerializerHelper.SerializeRenderRequest(new RenderRequest
+            {
+                Template = new Template
+                {
+                    Name = "foo"
+                },
+                Data = new
+                {
+                    aA = 1,
+                    Bb = 2
+                }
+            });
+
+            serialized.ShouldContain("aA", Case.Sensitive);
+            serialized.ShouldContain("Bb", Case.Sensitive);
+            serialized.ShouldContain("\"data\": {", Case.Sensitive);
+        }
+
+        [Test]
+        public void TestShouldntFailWhenSerializingRenderRequestWithNullData()
+        {
+            var serialized = SerializerHelper.SerializeRenderRequest(new RenderRequest
+            {
+                Template = new Template
+                {
+                    Name = "foo"
+                }                
+            });
+
+            serialized.ShouldContain("template", Case.Sensitive);           
+        }
+
+        [Test]
+        public void TestShouldntChangeDataPropsCasingForAnonymousObject()
+        {
+            var serialized = SerializerHelper.SerializeRenderRequest(new  {
+                Template = new 
+                {
+                    name = "foo"
+                },
+                data = new
+                {
+                    aA = 1,
+                    Bb = 2
+                }
+            });
+
+            serialized.ShouldContain("aA", Case.Sensitive);
+            serialized.ShouldContain("Bb", Case.Sensitive);
+            serialized.ShouldContain("\"data\": {", Case.Sensitive);
+
+            serialized.ShouldContain("template", Case.Sensitive);
+        }
+
+        [Test]
+        public void TestShouldntFailWhenSerializingAnonymousRenderRequestWithNullData()
+        {
+            var serialized = SerializerHelper.SerializeRenderRequest(new  {
+                template = new  {
+                    Name = "foo"
+                }
+            });
+
+            serialized.ShouldContain("template", Case.Sensitive);
+        }       
     }
 }
