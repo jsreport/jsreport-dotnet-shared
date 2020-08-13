@@ -1,4 +1,5 @@
 using jsreport.Types;
+using Newtonsoft.Json.Serialization;
 using NUnit.Framework;
 using Shouldly;
 using System.Collections.Generic;
@@ -97,6 +98,25 @@ namespace jsreport.Shared.Test
             });
 
             serialized.ShouldContain("template", Case.Sensitive);
-        }       
+        }
+
+        [Test]
+        public void TestShouldApplyCustomContractResolver()
+        {
+            var serialized = SerializerHelper.SerializeRenderRequest(new RenderRequest
+            {
+                Template = new Template
+                {
+                    Name = "foo"
+                },
+                Data = new
+                {
+                    HelloWorld = 1
+                }
+            }, new CamelCasePropertyNamesContractResolver());
+
+            serialized.ShouldContain("helloWorld", Case.Sensitive);            
+            serialized.ShouldContain("\"data\": {", Case.Sensitive);
+        }
     }
 }

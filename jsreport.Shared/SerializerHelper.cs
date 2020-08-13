@@ -82,7 +82,7 @@ namespace jsreport.Shared
             return meta.ContainsKey(metaKey) ? meta[metaKey] : null;
         }
 
-        public static string SerializeRenderRequest(RenderRequest rr)
+        public static string SerializeRenderRequest(RenderRequest rr, IContractResolver dataContractResolver = null)
         {
             // a hack to avoid camel casing the data prop values
             var data = rr.Data;
@@ -100,7 +100,7 @@ namespace jsreport.Shared
             
             if (data != null)
             {
-                js.ContractResolver = new DefaultContractResolver();
+                js.ContractResolver = dataContractResolver ?? new DefaultContractResolver();
                 jo["data"] = JObject.FromObject(data, js);
             }
             
@@ -115,7 +115,7 @@ namespace jsreport.Shared
             return jo.ToString();            
         }
 
-        public static string SerializeRenderRequest(object r)
+        public static string SerializeRenderRequest(object r, IContractResolver dataContractResolver = null)
         {
             // a hack to avoid camel casing the data prop values
             IDictionary<string, object> expando = new ExpandoObject();
@@ -147,7 +147,7 @@ namespace jsreport.Shared
 
             var jo = JObject.FromObject(expando as ExpandoObject,js);
 
-            js.ContractResolver = new DefaultContractResolver();
+            js.ContractResolver = dataContractResolver ?? new DefaultContractResolver();
             if (data != null)
             {
                 jo["data"] = JObject.FromObject(data, js);
@@ -156,7 +156,7 @@ namespace jsreport.Shared
             return jo.ToString();
         }
 
-        public static string SerializeRenderRequest(string templateShortid, object data)
+        public static string SerializeRenderRequest(string templateShortid, object data, IContractResolver dataContractResolver = null)
         {
             if (string.IsNullOrEmpty(templateShortid))
                 throw new ArgumentNullException("templateShortid cannot be null");
@@ -168,10 +168,10 @@ namespace jsreport.Shared
                     Shortid = templateShortid
                 },
                 Data = data
-            });
+            }, dataContractResolver);
         }
 
-        public static string SerializeRenderRequest(string templateShortid, string jsonData)
+        public static string SerializeRenderRequest(string templateShortid, string jsonData, IContractResolver dataContractResolver = null)
         {
             if (string.IsNullOrEmpty(templateShortid))
                 throw new ArgumentNullException("templateShortid cannot be null");
@@ -183,10 +183,10 @@ namespace jsreport.Shared
                     Shortid = templateShortid
                 },
                 Data = string.IsNullOrEmpty(jsonData) ? (object)null : JObject.Parse(jsonData)
-            });            
+            }, dataContractResolver);            
         }
 
-        public static string SerializeRenderRequestForName(string templateName, object data)
+        public static string SerializeRenderRequestForName(string templateName, object data, IContractResolver dataContractResolver = null)
         {
             if (string.IsNullOrEmpty(templateName))
                 throw new ArgumentNullException("templateName cannot be null");
@@ -198,10 +198,10 @@ namespace jsreport.Shared
                     Name = templateName
                 },
                 Data = data
-            });
+            }, dataContractResolver);
         }
 
-        public static string SerializeRenderRequestForName(string templateName, string jsonData)
+        public static string SerializeRenderRequestForName(string templateName, string jsonData, IContractResolver contractResolver = null)
         {
             if (string.IsNullOrEmpty(templateName))
                throw new ArgumentNullException("templateName cannot be null");
@@ -213,7 +213,7 @@ namespace jsreport.Shared
                     Name = templateName
                 },
                 Data = string.IsNullOrEmpty(jsonData) ? (object)null : JObject.Parse(jsonData),                  
-            });          
+            }, contractResolver);          
         }
 
         public static IDictionary<string, string> SerializeConfigToDictionary(Configuration cfg)
