@@ -241,7 +241,16 @@ namespace jsreport.Shared
                 else
                 {
                     var key = property.GetCustomAttribute<DataMemberAttribute>().Name;
-                    config[key] = value.GetType() == typeof (bool) ? value.ToString().ToLower() : value.ToString();
+                    if (value.GetType() == typeof(bool))
+                    {
+                        config[key] = value.ToString().ToLower();
+                    } else if (value.GetType().IsEnum)
+                    {
+                        config[key] = ((Enum)value).GetAttributeOfType<EnumMemberAttribute>().Value;
+                    } else
+                    {
+                        config[key] = value.ToString();
+                    }                    
                 }
             }    
         }

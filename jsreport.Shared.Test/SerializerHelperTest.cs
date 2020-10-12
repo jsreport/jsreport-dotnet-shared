@@ -118,5 +118,20 @@ namespace jsreport.Shared.Test
             serialized.ShouldContain("helloWorld", Case.Sensitive);            
             serialized.ShouldContain("\"data\": {", Case.Sensitive);
         }
+
+        [Test]
+        public void TestSerializeConfigToDictionaryWithEnum()
+        {
+            var dicitonary = SerializerHelper.SerializeConfigToDictionary(new Configuration
+            {
+                Chrome = new ChromeConfiguration
+                {
+                    Strategy = ChromeStrategy.ChromePool
+                }
+            });
+
+
+            dicitonary["chrome_strategy"].ShouldBe("chrome-pool");
+        }
     }
 }
