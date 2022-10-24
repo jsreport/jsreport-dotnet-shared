@@ -3,6 +3,8 @@ using Newtonsoft.Json.Serialization;
 using NUnit.Framework;
 using Shouldly;
 using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace jsreport.Shared.Test
 {
@@ -132,6 +134,89 @@ namespace jsreport.Shared.Test
 
 
             dicitonary["chrome_strategy"].ShouldBe("chrome-pool");
+        }
+
+        [Test]
+        public void TestStandardPdfMetaSerialized()
+        {
+            var renderRequest = new RenderRequest
+            {
+                Template = new Template
+                {
+                    Name = "foo",
+                    PdfMeta = new PdfMeta
+                    {
+                        Author = "An Author",
+                        Creator = "A Creator",
+                        Keywords = "Some Keywords",
+                        Producer = "A Producer",
+                        Subject = "A Subject",
+                        Title = "A Great Title",
+                    }
+                }
+            };
+            var serialized = SerializerHelper.SerializeRenderRequest(renderRequest, new CamelCasePropertyNamesContractResolver());
+
+            serialized.ShouldContain("\"pdfMeta\": {", Case.Sensitive);
+            serialized.ShouldContain("\"author\": \"An Author\"", Case.Sensitive);
+            serialized.ShouldContain("\"creator\": \"A Creator\"", Case.Sensitive);
+            serialized.ShouldContain("\"keywords\": \"Some Keywords\"", Case.Sensitive);
+            serialized.ShouldContain("\"producer\": \"A Producer\"", Case.Sensitive);
+            serialized.ShouldContain("\"subject\": \"A Subject\"", Case.Sensitive);
+            serialized.ShouldContain("\"title\": \"A Great Title\"", Case.Sensitive);
+        }
+
+        [Test]
+        public void TestCustomPdfMetaPropertyPropertyCasingPreserved()
+        {
+            var renderRequest = new RenderRequest
+            {
+                Template = new Template
+                {
+                    Name = "foo",
+                    PdfMeta = new PdfMeta
+                    {
+                        Custom = new Dictionary<string, string>
+                        {
+                            ["A Custom Property"] = "with a value",
+                            ["another_Value_holder"] = "more value"
+                        }
+                    }
+                }
+            };
+            var serialized = SerializerHelper.SerializeRenderRequest(renderRequest, new CamelCasePropertyNamesContractResolver());
+
+            serialized.ShouldContain("\"custom\": {", Case.Sensitive);
+            serialized.ShouldContain("\"A Custom Property\": \"with a value\"", Case.Sensitive);
+            serialized.ShouldContain("\"another_Value_holder\": \"more value\"", Case.Sensitive);
+        }
+
+        [Test]
+        public void TestCustomPdfMetaPropertyOnlyHasValuesInDictionary()
+        {
+            var renderRequest = new RenderRequest
+            {
+                Template = new Template
+                {
+                    Name = "foo",
+                    PdfMeta = new PdfMeta
+                    {
+                        Custom = new Dictionary<string, string>
+                        {
+                            ["some property"] = "with awesome value"
+                        }
+                    }
+                }
+            };
+
+            var serialized = SerializerHelper.SerializeRenderRequest(renderRequest, new CamelCasePropertyNamesContractResolver());
+
+            var result = JObject.Parse(serialized);
+            var customPdfMetaResult = result["template"]?["pdfMeta"]?["custom"] as JObject;
+
+            customPdfMetaResult.ShouldNotBeNull();
+            customPdfMetaResult.Properties().ShouldContain(property => property.Name == "some property");
+            customPdfMetaResult.Properties().Count().ShouldBe(1);
         }
     }
 }

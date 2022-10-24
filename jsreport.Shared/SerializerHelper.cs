@@ -87,6 +87,15 @@ namespace jsreport.Shared
             var data = rr.Data;
             rr.Data = null;
 
+            // a hack to avoid the serializer altering the dictionary in anyway,
+            // the keys should have their case maintained, and no additional keys
+            // should be added.
+            var customPdfMeta = rr.Template?.PdfMeta?.Custom;
+            if (customPdfMeta != null)
+            {
+                rr.Template.PdfMeta.Custom = null;
+            }
+
             var js = new JsonSerializer()
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
@@ -96,11 +105,18 @@ namespace jsreport.Shared
             };
 
             var jo = JObject.FromObject(rr, js);
-            
+
             if (data != null)
             {
                 js.ContractResolver = dataContractResolver ?? new DefaultContractResolver();
                 jo["data"] = JObject.FromObject(data, js);
+            }
+
+            if (customPdfMeta != null)
+            {
+                js.ContractResolver = new DefaultContractResolver();
+                js.PreserveReferencesHandling = PreserveReferencesHandling.None;
+                jo["template"]["pdfMeta"]["custom"] = JObject.FromObject(customPdfMeta, js);
             }
             
             jo["overwrites"]?["template"]?.Values().ToList()
