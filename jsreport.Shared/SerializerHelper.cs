@@ -240,7 +240,10 @@ namespace jsreport.Shared
                 else
                 {
                     var key = property.GetCustomAttribute<DataMemberAttribute>().Name;
-                    if (value.GetType() == typeof(bool))
+                    if (value.GetType().IsArray)
+                    {
+                        config[key] = String.Join(",", ((IEnumerable<object>)value).Select(v => v.ToString()));
+                    } else if (value.GetType() == typeof(bool))
                     {
                         config[key] = value.ToString().ToLower();
                     } else if (value.GetType().IsEnum)

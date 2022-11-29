@@ -120,18 +120,23 @@ namespace jsreport.Shared.Test
         }
 
         [Test]
-        public void TestSerializeConfigToDictionaryWithEnum()
+        public void TestSerializeConfig()
         {
             var dicitonary = SerializerHelper.SerializeConfigToDictionary(new Configuration
             {
                 Chrome = new ChromeConfiguration
                 {
-                    Strategy = ChromeStrategy.ChromePool
+                    Strategy = ChromeStrategy.ChromePool,
+                    LaunchOptions = new ChromeLaunchOptionsConfiguration
+                    {
+                        Args = new[] { "a", "B" }
+                    }
                 }
             });
 
 
             dicitonary["chrome_strategy"].ShouldBe("chrome-pool");
+            dicitonary["chrome_launchOptions_args"].ShouldBe("a,B");
         }
     }
 }
