@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>3.8.1</Version>
+    <Version>3.8.2</Version>
     <Authors>Jan Blaha</Authors>
     <Company>jsreport</Company>
     <Product>jsreport</Product>
@@ -17,7 +17,7 @@
     <PackageTags>jsreport</PackageTags>
     <PackageReleaseNotes>Release notes are at https://github.com/jsreport/jsreport-dotnet-shared/releases</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <AssemblyVersion>3.8.0.0</AssemblyVersion>
+    <AssemblyVersion>3.8.2.0</AssemblyVersion>
     <FileVersion>3.8.1.0</FileVersion>
     <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
@@ -30,7 +30,7 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <PackageReference Include="jsreport.Types" Version="3.9.1" />       
+        <PackageReference Include="jsreport.Types" Version="3.9.4" />       
       </ItemGroup>
     </Otherwise>
   </Choose>
